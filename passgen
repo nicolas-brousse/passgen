@@ -3,7 +3,7 @@
 # passgen [type] [length]
 #
 # type:
-# - human (TODO)
+# - human (?)
 # - decent
 # - strong
 # - hard
@@ -11,7 +11,8 @@
 set -e
 
 usage() {
-    echo "$0 [type] [length]"
+    local binfile=`basename $0`
+    echo "$binfile [type] [length]"
 }
 
 notify() {
@@ -29,29 +30,25 @@ genpasswd() {
     echo ""
 }
 
-# human() {
-#
-# }
-
 decent() {
     local length=$1
-    [ "$length" == "" ] && length=8
+    [ "$length" == "" ] && length=10
     notify ${FUNCNAME[0]} $length
-    genpasswd ${length} 'A-Za-z0-9_-'
+    genpasswd ${length} 'A-Za-z0-9'
 }
 
 strong() {
     local length=$1
-    [ "$length" == "" ] && length=12
+    [ "$length" == "" ] && length=15
     notify ${FUNCNAME[0]} $length
     genpasswd ${length} 'A-Za-z0-9_-+='
 }
 
 hard() {
     local length=$1
-    [ "$length" == "" ] && length=16
+    [ "$length" == "" ] && length=40
     notify ${FUNCNAME[0]} $length
-    genpasswd ${length} 'A-Za-z0-9_\!\@\#\$\%\^\&\*\(\)-+='
+    genpasswd ${length} 'A-Za-z0-9_\!\@\#\$\%\^\&\*\(\)\{\}\[\]\;\~<>-+='
 }
 
 if [ "$1" == "" ]; then

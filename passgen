@@ -1,0 +1,61 @@
+#!/usr/bin/env sh
+
+# passgen [type] [length]
+#
+# type:
+# - human (TODO)
+# - decent
+# - strong
+# - hard
+
+set -e
+
+usage() {
+    echo "$0 [type] [length]"
+}
+
+notify() {
+    echo "> Generate '$1' password with $2 characters"
+    echo ""
+}
+
+genpasswd() {
+    local length=$1
+    local strings=$2
+    [ "$length" == "" ] && length=16
+    [ "$strings" == "" ] && strings=A-Za-z0-9_-
+    LC_CTYPE=C tr -dc ${strings} < /dev/urandom | head -c ${length} | xargs
+
+    echo ""
+}
+
+# human() {
+#
+# }
+
+decent() {
+    local length=$1
+    [ "$length" == "" ] && length=8
+    notify ${FUNCNAME[0]} $length
+    genpasswd ${length} 'A-Za-z0-9_-'
+}
+
+strong() {
+    local length=$1
+    [ "$length" == "" ] && length=12
+    notify ${FUNCNAME[0]} $length
+    genpasswd ${length} 'A-Za-z0-9_-+='
+}
+
+hard() {
+    local length=$1
+    [ "$length" == "" ] && length=16
+    notify ${FUNCNAME[0]} $length
+    genpasswd ${length} 'A-Za-z0-9_\!\@\#\$\%\^\&\*\(\)-+='
+}
+
+if [ "$1" == "" ]; then
+    usage;
+fi
+
+eval $1 $2

@@ -22,10 +22,7 @@ error() {
 
 # Generate password
 genpasswd() {
-    local strings=$2
-    [ "$length" == "" ] && length=16
-    [ "$strings" == "" ] && strings=A-Za-z0-9_-
-    LC_CTYPE=C tr -dc ${strings} < /dev/urandom | head -c ${length} | xargs
+    LC_CTYPE=C tr -dc ${chars} < /dev/urandom | head -c ${length} | xargs
 }
 
 # Default values

@@ -6,7 +6,7 @@ A shell script to generate password.
 ## Usage
 
 ```
-$ ./passgen [-l 0-9] [-n 0-9] [-q] decent|strong|hard
+$ ./passgen [options] decent|strong|hard
 ```
 
 Types:
@@ -15,22 +15,22 @@ Types:
 * `hard`: 40 chars
 
 Options:
-* `-l 0-9`: Password length
-* `-n 0-9`: Number of password to generate
-* `-q`: Quiet mode to only return the password
+* `-l 0-9`: Password length.
+* `-n 0-9`: Number of password to generate.
+* `-q`: Quiet mode to only return the password.
 
 
 ## Installation
 
-### Linux
+### From file
 
 ```sh
-$ sudo curl -LsS https://raw.githubusercontent.com/nicolas-brousse/passgen/v1.0.1/passgen -o /usr/local/bin/passgen
-$ sudo chmod a+x /usr/local/bin/passgen
+$ curl -LsS https://raw.githubusercontent.com/nicolas-brousse/passgen/v1.0.1/passgen -o /usr/local/bin/passgen
+$ chmod a+x /usr/local/bin/passgen
 ```
 
 
-### OSX with homebrew
+### OS X (with homebrew)
 
 ```sh
 brew install https://raw.githubusercontent.com/nicolas-brousse/passgen/master/contrib/homebrew/passgen.rb

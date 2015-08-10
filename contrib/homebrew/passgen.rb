@@ -1,8 +1,8 @@
 class Passgen < Formula
   desc "A password generator"
   homepage "https://github.com/nicolas-brousse/passgen"
-  # url "https://github.com/nicolas-brousse/passgen/version.tar.gz"
-  # sha256 ""
+  url "https://github.com/nicolas-brousse/passgen/archive/v1.0.0.tar.gz"
+  sha256 "121ef482054f265a370653906dc95313a556b7c6ac1779ab89d8846d18bf2800"
 
   head "https://github.com/nicolas-brousse/passgen.git"
 

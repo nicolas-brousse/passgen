@@ -25,7 +25,7 @@ Options:
 ### Linux
 
 ```sh
-$ sudo curl -LsS https://raw.githubusercontent.com/nicolas-brousse/passgen/v1.0.0/passgen -o /usr/local/bin/passgen
+$ sudo curl -LsS https://raw.githubusercontent.com/nicolas-brousse/passgen/v1.0.1/passgen -o /usr/local/bin/passgen
 $ sudo chmod a+x /usr/local/bin/passgen
 ```
 

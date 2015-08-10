@@ -1,58 +1,97 @@
 #!/usr/bin/env sh
 
-# passgen [type] [length]
-#
-# type:
-# - human (?)
-# - decent
-# - strong
-# - hard
-
 set -e
 
 usage() {
     local binfile=`basename $0`
-    echo "$binfile [type] [length]"
+    echo "Usage: $binfile [-l 0-9] [-n 0-9] [-q] decent|strong|hard" 1>&2;
+    exit 1
 }
 
-notify() {
-    echo "> Generate '$1' password with $2 characters"
+say() {
+    if [ ! "$quiet" = true ]; then
+        echo $1
+    fi
+}
+
+error() {
+    echo $1
     echo ""
+    usage
 }
 
+# Generate password
 genpasswd() {
-    local length=$1
     local strings=$2
     [ "$length" == "" ] && length=16
     [ "$strings" == "" ] && strings=A-Za-z0-9_-
     LC_CTYPE=C tr -dc ${strings} < /dev/urandom | head -c ${length} | xargs
-
-    echo ""
 }
 
-decent() {
-    local length=$1
-    [ "$length" == "" ] && length=10
-    notify ${FUNCNAME[0]} $length
-    genpasswd ${length} 'A-Za-z0-9'
-}
+# Default values
+occurences=1
+quiet=false
 
-strong() {
-    local length=$1
-    [ "$length" == "" ] && length=15
-    notify ${FUNCNAME[0]} $length
-    genpasswd ${length} 'A-Za-z0-9_-+='
-}
+# Options
+while getopts 'l:n:q' opt; do
+    case $opt in
+        'l')
+            if ! echo $OPTARG | egrep -q '^[0-9]+$'; then
+                error '-l must be an integer'
+            fi
+            length=${OPTARG}
+            ;;
+        'n')
+            if ! echo $OPTARG | egrep -q '^[0-9]+$'; then
+                error '-n must be an integer'
+            fi
+            occurences=${OPTARG}
+            ;;
+        'q')
+            quiet=true
+            ;;
+        *)
+            error "'${opt}' is not a valid argument!"
+            ;;
+    esac
+done
+shift $((OPTIND-1))
 
-hard() {
-    local length=$1
-    [ "$length" == "" ] && length=40
-    notify ${FUNCNAME[0]} $length
-    genpasswd ${length} 'A-Za-z0-9_\!\@\#\$\%\^\&\*\(\)\{\}\[\]\;\~<>-+='
-}
-
-if [ "$1" == "" ]; then
-    usage;
+if [ -z "$1" ]; then
+    usage
 fi
 
-eval $1 $2
+# Types of passwords
+case $1 in
+    'decent')
+        [ "$length" == "" ] && length=10
+        chars='A-Za-z0-9'
+        ;;
+    'strong')
+        [ "$length" == "" ] && length=15
+        chars='A-Za-z0-9_-+='
+        ;;
+    'hard')
+        [ "$length" == "" ] && length=40
+        chars='A-Za-z0-9_\!\@\#\$\%\^\&\*\(\)\{\}\[\]\;\~<>-+='
+        ;;
+    *)
+        echo "'${1}' is not a valid type of password!"
+        echo ""
+        usage
+        ;;
+esac
+
+if [ ! "$occurences" == "1" ]; then
+    say "> Generate $occurences occurences of '$1' password with $length characters"
+else
+    say "> Generate '$1' password with $length characters"
+fi
+
+say ""
+
+for (( i = 0; i < occurences; i++ )); do
+    genpasswd $1
+done
+
+say ""

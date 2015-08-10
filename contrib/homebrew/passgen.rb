@@ -1,8 +1,8 @@
 class Passgen < Formula
   desc "A password generator"
   homepage "https://github.com/nicolas-brousse/passgen"
-  url "https://github.com/nicolas-brousse/passgen/archive/v1.0.0.tar.gz"
-  sha256 "121ef482054f265a370653906dc95313a556b7c6ac1779ab89d8846d18bf2800"
+  url "https://github.com/nicolas-brousse/passgen/archive/v1.0.1.tar.gz"
+  sha256 "bdda05c98adccc5d752cb50148c5752947effbce0f7cc3277af934fe2aecb37a"
 
   head "https://github.com/nicolas-brousse/passgen.git"
 
@@ -12,6 +12,6 @@ class Passgen < Formula
 
   test do
     output = shell_output(bin/"passgen")
-    assert output.include? "passgen [type] [length]"
+    assert output.include? "Usage: passgen [-l 0-9] [-n 0-9] [-q] decent|strong|hard"
   end
 end

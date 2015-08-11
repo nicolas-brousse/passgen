@@ -18,7 +18,12 @@ set -e
 
 usage() {
     local binfile=`basename $0`
-    echo "Usage: $binfile [-l 0-9] [-n 0-9] [-q] decent|strong|hard" 1>&2;
+    echo "Usage: $binfile [options] decent|strong|hard" 1>&2;
+    echo ""
+    echo "Options:"
+    echo "  -l      Password length."
+    echo "  -n      Number of password to generate."
+    echo "  -q      Quiet mode to only return the password."
     exit 1
 }
 

@@ -61,16 +61,16 @@ fi
 # Types of passwords
 case $1 in
     'decent')
-        [ "$length" == "" ] && length=10
+        [ -z "$length" ] && length=10
         chars='A-Za-z0-9'
         ;;
     'strong')
-        [ "$length" == "" ] && length=15
+        [ -z "$length" ] && length=15
         chars='A-Za-z0-9_-+='
         ;;
     'hard')
-        [ "$length" == "" ] && length=40
-        chars='A-Za-z0-9_\!\@\#\$\%\^\&\*\(\)\{\}\[\]\;\~<>-+='
+        [ -z "$length" ] && length=40
+        chars='A-Za-z0-9_\!\@\#\$\%\^\&\*\(\)\{\}\[\]\;\~\<\>\-\+='
         ;;
     *)
         echo "'${1}' is not a valid type of password!"
@@ -79,7 +79,7 @@ case $1 in
         ;;
 esac
 
-if [ ! "$occurences" == "1" ]; then
+if [ ! "$occurences" -eq "1" ]; then
     say "> Generate $occurences occurences of '$1' password with $length characters"
 else
     say "> Generate '$1' password with $length characters"
@@ -87,8 +87,9 @@ fi
 
 say ""
 
-for (( i = 0; i < occurences; i++ )); do
-    genpasswd $1
+for i in $(seq 1 ${occurences})
+do
+    genpasswd $chars $length
 done
 
 say ""

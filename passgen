@@ -42,7 +42,7 @@ error() {
 # Generate password
 # See: http://unix.stackexchange.com/questions/45404/why-cant-tr-read-from-dev-urandom-on-osx#answers
 genpasswd() {
-    LC_CTYPE=C tr -dc ${chars} < /dev/urandom | head -c ${length} | xargs
+    LC_CTYPE=C tr -dc ${1} < /dev/urandom | head -c ${2} | xargs
 }
 
 # Default values
@@ -50,7 +50,7 @@ occurences=1
 quiet=false
 
 # Options
-while getopts 'l:n:q' opt; do
+while getopts 'l:n:qh' opt; do
     case $opt in
         'l')
             if ! echo $OPTARG | egrep -q '^[0-9]+$'; then
@@ -67,8 +67,8 @@ while getopts 'l:n:q' opt; do
         'q')
             quiet=true
             ;;
-        *)
-            error "'${opt}' is not a valid argument!"
+        'h'|*)
+            usage
             ;;
     esac
 done
@@ -94,7 +94,7 @@ case $1 in
         ;;
     *)
         echo "'${1}' is not a valid type of password!"
-        echo ""
+        echo ''
         usage
         ;;
 esac
@@ -105,11 +105,11 @@ else
     say "> Generate '$1' password with $length characters"
 fi
 
-say ""
+say ''
 
 for i in $(seq 1 ${occurences})
 do
     genpasswd $chars $length
 done
 
-say ""
+say ''

@@ -1,4 +1,18 @@
 #!/usr/bin/env sh
+#
+# ./passgen
+#
+# A shell script to generate password.
+#
+# Usage: passgen [options] decent|strong|hard
+#
+# Options:
+#   -l      Password length.
+#   -n      Number of password to generate.
+#   -q      Quiet mode to only return the password.
+#
+# Author: Nicolas Brousse
+#
 
 set -e
 
@@ -21,6 +35,7 @@ error() {
 }
 
 # Generate password
+# See: http://unix.stackexchange.com/questions/45404/why-cant-tr-read-from-dev-urandom-on-osx#answers
 genpasswd() {
     LC_CTYPE=C tr -dc ${chars} < /dev/urandom | head -c ${length} | xargs
 }

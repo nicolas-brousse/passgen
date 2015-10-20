@@ -25,7 +25,7 @@ Options:
 ### From file
 
 ```sh
-$ curl -LsS https://raw.githubusercontent.com/nicolas-brousse/passgen/v1.0.1/passgen -o /usr/local/bin/passgen
+$ curl -LsS https://raw.githubusercontent.com/nicolas-brousse/passgen/v1.0.2/passgen -o /usr/local/bin/passgen
 $ chmod a+x /usr/local/bin/passgen
 ```
 
